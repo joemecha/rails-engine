@@ -49,7 +49,6 @@ group :development, :test do
   gem 'simplecov', require: false, group: :test
   gem 'shoulda-matchers'
   gem 'travis'
-  gem 'did_you_mean'
 end
 
 group :development do

@@ -11,9 +11,9 @@ FactoryBot.define do
   end
 
   factory :merchant do
-    status = [ 0, 1 ]
+    # status = [ 0, 1 ]
     name {Faker::Space.galaxy}
-    status { status.sample }
+    # status { status.sample }
   end
 
   factory :item do
