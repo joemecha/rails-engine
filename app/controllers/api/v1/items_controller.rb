@@ -15,20 +15,13 @@ class API::V1::ItemsController < API::APIController
     render json: item
   end
 
-  def create 
+  def create; end
 
-  end
+  def update; end
 
-  def update
+  def destroy; end
 
-  end
-
-  def destroy 
-    
-  end
-
-
-  private 
+  private
 
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :merchant_id)

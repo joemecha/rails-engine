@@ -10,8 +10,9 @@ before_install:
 script:
 - bundle exec rails db:{create,migrate} RAILS_ENV=test
 - bundle exec rspec
-# deploy:
-#   provider: heroku
-#   api_key: ENV['heroku_app_id']
-#   app: joe-rails-engine
-#   run: rails db:migrate
+
+deploy:
+  provider: heroku
+  api_key: ENV['heroku_app_id']
+  app: joe-mecha-rails-engine
+  run: rails db:migrate
