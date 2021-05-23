@@ -15,7 +15,7 @@ RSpec.describe 'Items API' do
 
       expect(response).to be_successful
 
-      expect(items.count).to eq(100)
+      expect(items.count).to eq(20)
 
       items.each do |item|
         expect(item).to have_key(:id)
