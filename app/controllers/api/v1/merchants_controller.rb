@@ -6,7 +6,7 @@ class API::V1::MerchantsController < API::APIController
       merchants = Merchant.limit(results_limit).offset(page * results_limit)
     else
       merchants = Merchant.limit(20).offset(page * 20)
-    end 
+    end
     render json: merchants
   end
 

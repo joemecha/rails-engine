@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-RSpec.describe "Merchant Items API" do
+RSpec.describe 'Merchant Items API' do
   before :each do
     @merchant = create(:merchant)
 
     create_list(:item, 3, merchant: @merchant)
   end
 
-  describe "Happy path" do
+  describe 'Happy path' do
     it "shows a list of a merchant's items" do
       get "/api/v1/merchants/#{@merchant.id}/items"
 
       items = JSON.parse(response.body, symbolize_names: true)
-      
+
       expect(response).to be_successful
 
       expect(items.count).to eq(3)
@@ -30,13 +30,13 @@ RSpec.describe "Merchant Items API" do
         expect(item[:merchant_id]).to be_a(Integer)
       end
     end
-  end 
+  end
 
-  describe "Sad path" do
-    it "Returns 404 with bad merchant id" do
-      get "/api/v1/merchants/100000000/items"
-      
+  describe 'Sad path' do
+    it 'Returns 404 with bad merchant id' do
+      get '/api/v1/merchants/100000000/items'
+
       expect(response.status).to eq 404
     end
-  end  
-end 
+  end
+end

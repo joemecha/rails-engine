@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe "Merchants API" do 
-  before :each do 
+RSpec.describe 'Merchants API' do
+  before :each do
     @merchant = create(:merchant)
   end
 
-  describe "Happy path" do 
-    it "gets one merchant by its id" do 
+  describe 'Happy path' do
+    it 'gets one merchant by its id' do
       get "/api/v1/merchants/#{@merchant.id}"
 
       merchant = JSON.parse(response.body, symbolize_names: true)
 
-      expect(response).to be_successful 
+      expect(response).to be_successful
 
       expect(merchant[:data]).to have_key(:id)
       expect(merchant[:data][:id].to_i).to eq(@merchant.id)
