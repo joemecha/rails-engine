@@ -5,7 +5,7 @@ class Item < ApplicationRecord
             :merchant_id, presence: true
   validates :unit_price, numericality: true
 
-  has_many :invoice_items, dependent: destroy
+  has_many :invoice_items, dependent: :destroy
   has_many :invoices, through: :invoice_items
   belongs_to :merchant
 end
