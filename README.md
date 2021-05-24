@@ -1,6 +1,6 @@
 ![Title image](lib/images/title_rails_engine.jpeg)
 
-<!-- [![Build Status](https://travis-ci.com/joemecha/rails-engine.svg?branch=main)](https://travis-ci.com/joemecha/rails-engine) -->
+[![Build Status](https://travis-ci.com/joemecha/rails-engine.svg?branch=main)](https://travis-ci.com/joemecha/rails-engine)
 ## Table of contents
 [**General Info**](#general-info) |
 [**Link**](#link) |
@@ -27,7 +27,7 @@ This project is a build of a Rails API to expose the data that powers the site, 
 ### [https://joe-rails-engine.herokuapp.com/](https://joe-rails-engine.herokuapp.com/)
 
 ## Database Schema
-![Diagram](lib/images/esty-shop_diagram.jpeg "Database Schema")
+![Diagram](lib/images/database_diagram.png "Database Schema")
 
 ## Areas of Focus
 * Expose an API
@@ -42,6 +42,15 @@ This project is a build of a Rails API to expose the data that powers the site, 
 Project is created with:
 * Ruby version 2.5.3
 * Rails version 5.2.5
+* PostgreSQL
+* RSpec
+* Capybara
+* Factorybot
+* Faker
+* RuboCop
+* SimpleCov
+* Travis CI
+* Heroku
 
 ## Setup
 To run this program:
