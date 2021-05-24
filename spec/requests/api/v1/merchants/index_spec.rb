@@ -12,39 +12,38 @@ RSpec.describe 'Merchants API' do
       merchants = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
+      expect(merchants[:data].count).to eq(20)
 
-      expect(merchants.count).to eq(20)
-
-      merchants.each do |merchant|
+      merchants[:data].each do |merchant|
         expect(merchant).to have_key(:id)
-        expect(merchant[:id]).to be_an(Integer)
-        expect(merchant).to have_key(:name)
-        expect(merchant[:name]).to be_a(String)
+        expect(merchant[:id]).to be_an(String)
+        expect(merchant).to have_key(:attributes)
+        expect(merchant[:attributes][:name]).to be_a(String)
       end
     end
 
-    it 'sends a list of merchants 20 at a time' do
+    it 'sends a list of first merchants 20 at a time' do
       get '/api/v1/merchants'
 
       expect(response).to be_successful
       first_merchants = JSON.parse(response.body, symbolize_names: true)
 
-      get '/api/v1/merchants?page=0'
+      get '/api/v1/merchants?page=1'
       expect(response).to be_successful
-      page_0 = JSON.parse(response.body, symbolize_names: true)
+      page_1 = JSON.parse(response.body, symbolize_names: true)
 
-      expect(first_merchants.count).to eq(20)
-      expect(first_merchants).to eq(page_0)
+      expect(first_merchants[:data].count).to eq(20)
+      expect(first_merchants[:data]).to eq(page_1[:data])
     end
 
     it 'shows the second 20 merchants' do
-      get '/api/v1/merchants?page=1'
+      get '/api/v1/merchants?page=2'
 
       expect(response).to be_successful
 
-      page_1 = JSON.parse(response.body, symbolize_names: true)
+      page_2 = JSON.parse(response.body, symbolize_names: true)
 
-      expect(page_1.count).to eq(20)
+      expect(page_2[:data].count).to eq(20)
     end
 
     it 'shows first page of 50 merchants' do
@@ -53,7 +52,7 @@ RSpec.describe 'Merchants API' do
       expect(response).to be_successful
       merchants = JSON.parse(response.body, symbolize_names: true)
 
-      expect(merchants.count).to eq(50)
+      expect(merchants[:data].count).to eq(50)
     end
 
     it 'shows all merchants for large per_page requests' do
@@ -63,7 +62,7 @@ RSpec.describe 'Merchants API' do
 
       merchants = JSON.parse(response.body, symbolize_names: true)
 
-      expect(merchants.count).to eq(100)
+      expect(merchants[:data].count).to eq(100)
     end
 
     it 'shows a blank page for range of merchants that contains no data' do
@@ -72,7 +71,7 @@ RSpec.describe 'Merchants API' do
       expect(response).to be_successful
       merchants = JSON.parse(response.body, symbolize_names: true)
 
-      expect(merchants.count).to eq(0)
+      expect(merchants[:data].count).to eq(0)
     end
   end
 

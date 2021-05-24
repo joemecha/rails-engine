@@ -49,6 +49,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'simplecov', require: false, group: :test
   gem 'travis'
+  gem 'fast_jsonapi'
 end
 
 group :development do
