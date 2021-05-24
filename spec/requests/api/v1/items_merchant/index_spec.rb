@@ -13,20 +13,19 @@ RSpec.describe 'Item Merchant API' do
       merchant_info = JSON.parse(response.body, symbolize_names: true)
 
       expect(response).to be_successful
-
-      expect(merchant_info).to have_key(:id)
-      expect(merchant_info[:id]).to be_an(Integer)
-      expect(merchant_info).to have_key(:name)
-      expect(merchant_info[:name]).to be_a(String)
-      expect(merchant_info[:id]).to eq(@item.id)
+      expect(merchant_info[:data]).to have_key(:id)
+      expect(merchant_info[:data][:id]).to be_an(String)
+      expect(merchant_info[:data][:attributes]).to have_key(:name)
+      expect(merchant_info[:data][:attributes][:name]).to be_a(String)
+      expect(merchant_info[:data][:id].to_i).to eq(@item.merchant_id)
+    end
+  end
+  
+  describe 'Sad path' do
+    it 'Returns 404 with bad item id' do
+      get '/api/v1/items/100000000/merchant'
+      
+      expect(response.status).to eq 404
     end
   end
 end
-
-  # describe 'Sad path' do
-  #   it 'Returns 404 with bad item id' do
-  #     get '/api/v1/items/100000000/merchant'
-
-  #     expect(response.status).to eq 404
-  #   end
-  # end
