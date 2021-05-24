@@ -15,11 +15,11 @@ class API::V1::ItemsController < API::APIController
     render json: item
   end
 
-  def create; end
+  # def create; end
 
-  def update; end
+  # def update; end
 
-  def destroy; end
+  # def destroy; end
 
   private
 

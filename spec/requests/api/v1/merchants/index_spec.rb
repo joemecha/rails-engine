@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchants API' do
-  # before :each do
-  #   create_list(:merchant, 61)
-  # end
+  before :each do
+    create_list(:merchant, 100)
+  end
 
   describe 'happy path' do
     it 'sends a list of merchants' do
-      create_list(:merchant, 20)
       get '/api/v1/merchants'
 
       merchants = JSON.parse(response.body, symbolize_names: true)
@@ -25,32 +24,30 @@ RSpec.describe 'Merchants API' do
     end
 
     it 'sends a list of merchants 20 at a time' do
-      create_list(:merchant, 21)
       get '/api/v1/merchants'
+
       expect(response).to be_successful
       first_merchants = JSON.parse(response.body, symbolize_names: true)
 
       get '/api/v1/merchants?page=0'
       expect(response).to be_successful
-      page_0_merchants = JSON.parse(response.body, symbolize_names: true)
+      page_0 = JSON.parse(response.body, symbolize_names: true)
 
       expect(first_merchants.count).to eq(20)
-      expect(first_merchants).to eq(page_0_merchants)
+      expect(first_merchants).to eq(page_0)
     end
 
     it 'shows the second 20 merchants' do
-      create_list(:merchant, 40)
       get '/api/v1/merchants?page=1'
 
       expect(response).to be_successful
 
-      page_2 = JSON.parse(response.body, symbolize_names: true)
+      page_1 = JSON.parse(response.body, symbolize_names: true)
 
-      expect(page_2.count).to eq(20)
+      expect(page_1.count).to eq(20)
     end
 
     it 'shows first page of 50 merchants' do
-      create_list(:merchant, 51)
       get '/api/v1/merchants?per_page=50'
 
       expect(response).to be_successful
@@ -60,7 +57,6 @@ RSpec.describe 'Merchants API' do
     end
 
     it 'shows all merchants for large per_page requests' do
-      create_list(:merchant, 101)
       get '/api/v1/merchants?per_page=100'
 
       expect(response).to be_successful
@@ -80,16 +76,16 @@ RSpec.describe 'Merchants API' do
     end
   end
 
-  describe 'sad path' do
-    it 'shows page 1 if page is 0 or lower' do
-      get '/api/v1/merchants?page=1'
-      page_1 = JSON.parse(response.body, symbolize_names: true)
+  # describe 'sad path' do
+  #   it 'shows page 1 if page is 0 or lower' do
+  #     get '/api/v1/merchants?page=1'
+  #     page_1 = JSON.parse(response.body, symbolize_names: true)
 
-      get '/api/v1/merchants?page=0'
-      expect(response).to be_successful
-      page_0 = JSON.parse(response.body, symbolize_names: true)
+  #     get '/api/v1/merchants?page=0'
+  #     expect(response).to be_successful
+  #     page_0 = JSON.parse(response.body, symbolize_names: true)
 
-      expect(page_1).to eq(page_0)
-    end
-  end
+  #     expect(page_1).to eq(page_0)
+  #   end
+  # end
 end
