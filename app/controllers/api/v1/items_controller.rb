@@ -15,7 +15,10 @@ class API::V1::ItemsController < API::APIController
     render json: item
   end
 
-  # def create; end
+  def create
+    item = Item.create!(item_params)
+    render json: item
+  end
 
   # def update; end
 
