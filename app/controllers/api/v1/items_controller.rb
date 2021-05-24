@@ -20,9 +20,16 @@ class API::V1::ItemsController < API::APIController
     render json: item
   end
 
-  # def update; end
+  def update
+    item = Item.find(params[:id])
+    item.update!(item_params)
+    render json: item
+  end
 
-  # def destroy; end
+  def destroy
+    item = Item.find(params[:id])
+    item.destroy
+  end
 
   private
 

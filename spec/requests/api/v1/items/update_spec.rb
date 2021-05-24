@@ -20,7 +20,6 @@ RSpec.describe 'Items API' do
     item_params = { name: "Icelandic ice cubes" }
     headers = {"CONTENT_TYPE" => "application/json"}
 
-    # We include this header to make sure that these params are passed as JSON rather than as plain text
     patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
     item = Item.find_by(id: id)
 
@@ -28,4 +27,6 @@ RSpec.describe 'Items API' do
     expect(item.name).to_not eq(previous_name)
     expect(item.name).to eq("Icelandic ice cubes")
   end
+
+  # ADD SAD PATHS with ERROR RESPONSE
 end 
