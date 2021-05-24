@@ -10,13 +10,13 @@ RSpec.describe 'Merchants API' do
       get "/api/v1/merchants/#{@merchant.id}"
 
       merchant_info = JSON.parse(response.body, symbolize_names: true)
-
+      
       expect(response).to be_successful
-      expect(merchant_info).to have_key(:id)
-      expect(merchant_info[:id].to_i).to eq(@merchant.id)
+      expect(merchant_info[:data]).to have_key(:id)
+      expect(merchant_info[:data][:id].to_i).to eq(@merchant.id)
 
-      expect(merchant_info).to have_key(:name)
-      expect(merchant_info[:name]).to be_a(String)
+      expect(merchant_info[:data]).to have_key(:attributes)
+      expect(merchant_info[:data][:attributes][:name]).to be_a(String)
     end
   end
 end
