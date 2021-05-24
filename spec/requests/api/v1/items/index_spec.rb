@@ -15,39 +15,39 @@ RSpec.describe 'Items API' do
 
       expect(response).to be_successful
 
-      expect(items.count).to eq(20)
+      expect(items[:data].count).to eq(20)
 
-      items.each do |item|
+      items[:data].each do |item|
         expect(item).to have_key(:id)
-        expect(item[:id]).to be_an(Integer)
-        expect(item).to have_key(:name)
-        expect(item[:name]).to be_a(String)
+        expect(item[:id]).to be_an(String)
+        expect(item).to have_key(:attributes)
+        expect(item[:attributes][:name]).to be_a(String)
       end
     end
   
     it 'sends a list of items 20 at a time' do
-      create_list(:item, 21)
       get '/api/v1/items'
+
       expect(response).to be_successful
       first_items = JSON.parse(response.body, symbolize_names: true)
 
-      get '/api/v1/items?page=0'
+      get '/api/v1/items?page=1'
       expect(response).to be_successful
-      page_0_items = JSON.parse(response.body, symbolize_names: true)
+      page_1_items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(first_items.count).to eq(20)
-      expect(first_items).to eq(page_0_items)
+      expect(first_items[:data].count).to eq(20)
+      expect(first_items).to eq(page_1_items)
     end
 
     it 'shows the second 20 items' do
       create_list(:item, 40)
-      get '/api/v1/items?page=1'
+      get '/api/v1/items?page=2'
 
       expect(response).to be_successful
 
       page_2 = JSON.parse(response.body, symbolize_names: true)
 
-      expect(page_2.count).to eq(20)
+      expect(page_2[:data].count).to eq(20)
     end
 
     it 'shows first page of 50 items' do
@@ -56,7 +56,7 @@ RSpec.describe 'Items API' do
       expect(response).to be_successful
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items.count).to eq(50)
+      expect(items[:data].count).to eq(50)
     end
 
     it 'shows all items for large per_page requests' do
@@ -66,7 +66,7 @@ RSpec.describe 'Items API' do
 
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items.count).to eq(100)
+      expect(items[:data].count).to eq(100)
     end
 
     it 'shows a blank page for range of items that contains no data' do
@@ -75,20 +75,20 @@ RSpec.describe 'Items API' do
       expect(response).to be_successful
       items = JSON.parse(response.body, symbolize_names: true)
 
-      expect(items.count).to eq(0)
+      expect(items[:data].count).to eq(0)
     end
   end
 
-  # describe 'sad path' do
-  #   it 'shows page 1 if page is 0 or lower' do
-  #     get '/api/v1/items?page=1'
-  #     page_1 = JSON.parse(response.body, symbolize_names: true)
+  describe 'sad path' do
+    it 'shows page 1 if page is 0 or lower' do
+      get '/api/v1/items?page=1'
+      page_1 = JSON.parse(response.body, symbolize_names: true)
 
-  #     get '/api/v1/items?page=0'
-  #     expect(response).to be_successful
-  #     page_0 = JSON.parse(response.body, symbolize_names: true)
-  #     require 'pry'; binding.pry
-  #     expect(page_1).to eq(page_0)
-  #   end
-  # end
+      get '/api/v1/items?page=0'
+      expect(response).to be_successful
+      page_0 = JSON.parse(response.body, symbolize_names: true)
+
+      expect(page_1).to eq(page_0)
+    end
+  end
 end
