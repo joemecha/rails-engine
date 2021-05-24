@@ -14,7 +14,6 @@ RSpec.describe 'Item Merchant API' do
 
       expect(response).to be_successful
 
-      expect(merchant_info.count).to eq(1)
       expect(merchant_info).to have_key(:id)
       expect(merchant_info[:id]).to be_an(Integer)
       expect(merchant_info).to have_key(:name)
