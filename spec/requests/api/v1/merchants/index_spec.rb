@@ -75,16 +75,16 @@ RSpec.describe 'Merchants API' do
     end
   end
 
-  # describe 'sad path' do
-  #   it 'shows page 1 if page is 0 or lower' do
-  #     get '/api/v1/merchants?page=1'
-  #     page_1 = JSON.parse(response.body, symbolize_names: true)
+  describe 'sad path' do
+    it 'shows page 1 if page is 0 or lower' do
+      get '/api/v1/merchants?page=1'
+      page_1 = JSON.parse(response.body, symbolize_names: true)
 
-  #     get '/api/v1/merchants?page=0'
-  #     expect(response).to be_successful
-  #     page_0 = JSON.parse(response.body, symbolize_names: true)
+      get '/api/v1/merchants?page=0'
+      expect(response).to be_successful
+      page_0 = JSON.parse(response.body, symbolize_names: true)
 
-  #     expect(page_1).to eq(page_0)
-  #   end
-  # end
+      expect(page_1).to eq(page_0)
+    end
+  end
 end
