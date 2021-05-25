@@ -15,8 +15,8 @@ on:
   branch: main 
   skip_cleanup: 'true'
 
-# deploy:
-#   provider: heroku
-#   api_key: ENV['heroku_app_id']
-#   app: joe-mecha-rails-engine
-#   run: rails db:migrate
+deploy:
+  provider: heroku
+  api_key: ENV['heroku_app_id']
+  app: joe-mecha-rails-engine
+  run: rails db:migrate
