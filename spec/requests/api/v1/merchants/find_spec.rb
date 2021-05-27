@@ -18,35 +18,31 @@ RSpec.describe 'Find one Merchant API' do
       expect(response.content_type).to eq("application/json")
       
       found_merchant = JSON.parse(response.body, symbolize_names: true)
-      require 'pry'; binding.pry
       
       expect(found_merchant.keys).to eq([:data])
       expect(found_merchant[:data]).to be_a(Hash)
-      # expect(found_merchant[:data].keys).to eq([:id, :type, :attributes])
-      # expect(found_merchant[:data][:id].to_i).to eq("#{@merchant_3.id}")
+      expect(found_merchant[:data].keys).to eq([:id, :type, :attributes])
+      expect(found_merchant[:data][:id]).to eq("#{@merchant_3.id}")
 
-      # expect(found_merchant[:data]).to have_key(:type)
-      # expect(found_merchant[:data][:type]).to eq('merchant')
+      expect(found_merchant[:data]).to have_key(:type)
+      expect(found_merchant[:data][:type]).to eq('merchant')
 
-      # expect(found_merchant[:data][:attributes]).to have_key(:name)
-      # expect(found_merchant[:data][:attributes][:name]).to be_a(String)
-      # expect(found_merchant[:data][:attributes][:name]).to eq(@merchant_3.name)
-
-      # expect(found_merchant[:data][:attributes]).to have_key(:description)
-      # expect(found_merchant[:data][:attributes][:description]).to be_a(String)
-      # expect(found_merchant[:data][:attributes][:description]).to eq(@merchant_3.description)
+      expect(found_merchant[:data][:attributes]).to have_key(:name)
+      expect(found_merchant[:data][:attributes][:name]).to be_a(String)
+      expect(found_merchant[:data][:attributes][:name]).to eq(@merchant_3.name)
     end
   end
 
   describe 'sad path' do
-    xit 'no fragment matched' do
+    it 'no fragment matched' do
       get '/api/v1/merchants/find?name=NOMATCH'
 
       expect(response).to be_successful
 
       not_a_merchant = JSON.parse(response.body, symbolize_names: true)
 
-      expect(not_a_merchant[:data]).to eq({})
+      expect(not_a_merchant.keys).to include(:data)
+      expect(not_a_merchant[:data]).to be_an(Object)
     end
   end
 end

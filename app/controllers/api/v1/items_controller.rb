@@ -18,17 +18,17 @@ class API::V1::ItemsController < ApplicationController
   def create
     item = Item.new(item_params)
     if item.save
-      render json: ItemSerializer.new(item)
+      render json: ItemSerializer.new(item), status: 201
     else
-      render json: item.errors.full_messages, status: unprocessable_entity
+      render :json => { :errors => item.errors.full_messages }, :status => 404
     end 
   end
 
   def update
     item = Item.find(params[:id])
     if item.update!(item_params)
-    render json: ItemSerializer.new(item)
-    else 
+      render json: ItemSerializer.new(item)
+    else
       render json: item.errors.full_messages, status: unprocessable_entity
     end 
   end

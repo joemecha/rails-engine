@@ -2,7 +2,7 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def self.search_one(name)
-    where("lower(name) ILIKE '%#{name}%'").order(:name).limit(1)
+    where("lower(name) ILIKE '%#{name}%'").order(:name)
   end
 
   def self.search_all(name)
