@@ -25,22 +25,21 @@ RSpec.describe 'Items API' do
   end
 
 
-  # HOW? VALIDATIONS FAIL AND STOP PROCESS
-  #
-  # it "Sad path - fields left blank" do
-  #   item_params = ({
-  #                   name: '',
-  #                   description: '',
-  #                   unit_price: 75.95,
-  #                   merchant_id: @merchant.id,
-  #                 })
-  #   headers = {"CONTENT_TYPE" => "application/json"}
 
-  #   post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+  it "Sad path - fields left blank" do
+    item_params = ({
+                    name: '',
+                    description: '',
+                    unit_price: 75.95,
+                    merchant_id: @merchant.id,
+                  })
+    headers = {"CONTENT_TYPE" => "application/json"}
 
-  #   expect(response).to_not be_successful
-  #   expect(status).to eq(404)
-  # end
+    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+
+    expect(response).to_not be_successful
+    expect(status).to eq(404)
+  end
 
   # Sad path - wrong field included - ignore and create
   # Sad path - wrong data type - error don't create

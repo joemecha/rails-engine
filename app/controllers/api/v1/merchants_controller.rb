@@ -8,7 +8,11 @@ class API::V1::MerchantsController < API::APIController
   end
 
   def show
-    merchant = Merchant.find(params[:id])
-    render json: MerchantSerializer.new(merchant)
+    @merchant = Merchant.find(params[:id])
+    if params[:id]
+      render json: MerchantSerializer.new(@merchant)
+    else
+      render :json => { :errors => @merchant.errors.full_messages }, :status => 404
+    end 
   end
 end
