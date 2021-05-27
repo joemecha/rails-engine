@@ -1,4 +1,4 @@
-class API::V1::ItemsController < API::APIController
+class API::V1::ItemsController < ApplicationController
   def index
     page = [params.fetch(:page, 1).to_i, 1].max
     per_page = params.fetch(:per_page, 20).to_i
@@ -8,19 +8,29 @@ class API::V1::ItemsController < API::APIController
   end
 
   def show
-    item = Item.find(params[:id])
-    render json: ItemSerializer.new(item)
+    if item = Item.find(params[:id])
+      render json: ItemSerializer.new(item)
+    else 
+      render json: item.errors.full_messages, status: not_found
+    end 
   end
 
   def create
-    item = Item.create!(item_params)
-    render json: ItemSerializer.new(item), response: :created
+    item = Item.new(item_params)
+    if item.save
+      render json: ItemSerializer.new(item)
+    else
+      render json: item.errors.full_messages, status: unprocessable_entity
+    end 
   end
 
   def update
     item = Item.find(params[:id])
-    item.update!(item_params)
+    if item.update!(item_params)
     render json: ItemSerializer.new(item)
+    else 
+      render json: item.errors.full_messages, status: unprocessable_entity
+    end 
   end
 
   def destroy
