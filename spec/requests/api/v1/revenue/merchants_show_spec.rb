@@ -6,33 +6,32 @@ RSpec.describe "Total Revenue for One Merchant API", type: :request do
   end 
 
   describe 'Happy Path' do
-    xit 'Merchants Revenue Show /api/v1/revenue/merchants/:id' do
+    it 'Merchants Revenue Show /api/v1/revenue/merchants/:id' do
       get "/api/v1/revenue/merchants/#{@merchant_2.id}"
 
       merchant = JSON.parse(response.body, symbolize_names: true)
-      expect(response).to be_successful
-      expect(merchant[:data].count).to eq(1)
-      expect(merchant[:data][:attributes][:revenue]).to eq(@merchant_2.revenue)
       
-      expect(merchant).to have_key(:id)
-      expect(merchant[:id]).to be_an(String)
-      expect(merchant).to have_key(:attributes)
-      expect(merchant[:attributes][:name]).to be_a(String)
-      expect(merchant[:attributes]).to have_key(:revenue)
-      expect(merchant[:attributes][:revenue]).to be_a(Float)
+      expect(response).to be_successful
+      expect(merchant[:data].count).to eq(3)
+      
+      expect(merchant[:data]).to have_key(:id)
+      expect(merchant[:data][:id]).to be_an(String)
+      expect(merchant[:data]).to have_key(:attributes)
+      expect(merchant[:data][:attributes]).to have_key(:revenue)
+      expect(merchant[:data][:attributes][:revenue]).to be_a(Float)
     end
   end 
 
   describe 'sad path' do
-    xit "returns an error if the id doesn't exist" do
+    it "returns an error if the id doesn't exist" do
       get "/api/v1/revenue/merchants/9000000"
 
       expect(response).to_not be_successful
-      expect(response.status).to eq 400
+      expect(response.status).to eq 404
       
       get '/api/v1/revenue/merchants/F'
       expect(response).to_not be_successful
-      expect(response.status).to eq 400
+      expect(response.status).to eq 404
     end
   end
 

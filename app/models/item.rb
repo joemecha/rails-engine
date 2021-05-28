@@ -10,11 +10,11 @@ class Item < ApplicationRecord
   belongs_to :merchant
 
   def self.revenue(search_quantity = 10)
-    joins(invoice_items: {invoice: :transactions})
-    .where("invoices.status='shipped' AND transactions.result='success'")
-    .group(:id)
-    .select('items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
-    .order('revenue desc')
-    .limit(search_quantity)
+    joins(invoice_items: { invoice: :transactions })
+      .where("invoices.status='shipped' AND transactions.result='success'")
+      .group(:id)
+      .select('items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+      .order('revenue desc')
+      .limit(search_quantity)
   end
 end
