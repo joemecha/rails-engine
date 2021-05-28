@@ -5,17 +5,18 @@ class API::V1::Revenue::MerchantsController < ApplicationController
       merchants = Merchant.revenue(params[:quantity])
       render json: MerchantRevenueSerializer.new(merchants)
     else
-       render json: { errors: merchants.errors.full_messages }, status: :bad_request
+      render json: { errors: 'Bad Request' }, status: :bad_request
     end 
   end
 
   def show
     # total revenue for a given merchant
-     merchant = Merchant.find(params[:id])
     if params[:id]
+      merchant = Merchant.find(params[:id])
+      merchant.revenue
       render json: MerchantRevenueSerializer.new(merchant)
     else
-      render json: { errors: merchant.errors.full_messages }, status: :bad_request
-    end
+      render json: { errors: 'Not Found' }, status: :not_found
+    end 
   end
 end

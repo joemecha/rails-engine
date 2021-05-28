@@ -1,9 +1,45 @@
 require 'rails_helper'
 
-RSpec.describe "/api/v1/revenue/merchants", type: :request do
+RSpec.describe "Total Revenue for One Merchant API", type: :request do
   before :each do 
-    # set_up 
-      @merchant_1 = create(:merchant) # revenue = 3.0
+    set_up 
+  end 
+
+  describe 'Happy Path' do
+    xit 'Merchants Revenue Show /api/v1/revenue/merchants/:id' do
+      get "/api/v1/revenue/merchants/#{@merchant_2.id}"
+
+      merchant = JSON.parse(response.body, symbolize_names: true)
+      expect(response).to be_successful
+      expect(merchant[:data].count).to eq(1)
+      expect(merchant[:data][:attributes][:revenue]).to eq(@merchant_2.revenue)
+
+      require 'pry'; binding.pry
+      
+      expect(merchant).to have_key(:id)
+      expect(merchant[:id]).to be_an(String)
+      expect(merchant).to have_key(:attributes)
+      expect(merchant[:attributes][:name]).to be_a(String)
+      expect(merchant[:attributes]).to have_key(:revenue)
+      expect(merchant[:attributes][:revenue]).to be_a(Float)
+    end
+  end 
+
+  describe 'sad path' do
+    xit "returns an error if the id doesn't exist" do
+      get "/api/v1/revenue/merchants/9000000"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq 400
+      
+      get '/api/v1/revenue/merchants/F'
+      expect(response).to_not be_successful
+      expect(response.status).to eq 400
+    end
+  end
+
+  def set_up
+    @merchant_1 = create(:merchant) # revenue = 3.0
     @merchant_2 = create(:merchant) # revenue = 5.0
     @merchant_3 = create(:merchant) # revenue = 0
     @merchant_4 = create(:merchant) # revenue = 50.0
@@ -64,58 +100,5 @@ RSpec.describe "/api/v1/revenue/merchants", type: :request do
     create(:transaction, invoice: @invoice_3, result: 'failed')
     create(:transaction, invoice: @invoice_4, result: 'success')
     create(:transaction, invoice: @invoice_5, result: 'success')
-  end 
-
-  describe 'Revenue Merchants Happy path' do
-    it 'sends a list of merchants and revenue' do
-      get '/api/v1/revenue/merchants?quantity=2'
-
-      merchants = JSON.parse(response.body, symbolize_names: true)
-      require 'pry'; binding.pry
-      expect(response).to be_successful
-      expect(merchants[:data].count).to eq(2)
-      expect(merchants[:data].first[:revenue]).to eq(50.0)
-      expect(merchants[:data].last[:revenue]).to eq(5.0)
-
-      merchants[:data].each do |merchant|
-        expect(merchant).to have_key(:id)
-        expect(merchant[:id]).to be_an(String)
-        expect(merchant).to have_key(:attributes)
-        expect(merchant[:attributes][:name]).to be_a(String)
-        expect(merchant).to have_key(:revenue)
-        expect(merchant[:attributes][:revenue]).to be_a(Float)
-      end
-    end
-
-    it 'sends a list of all merchants if the quantity is too large' do
-      get '/api/v1/revenue/merchants?quantity=100'
-
-      expect(response).to be_successful
-      merchants = JSON.parse(response.body, symbolize_names: true)
-
-      expect(merchants[:data].count).to eq(5)
-      expect(merchants[:data][:revenue].last.round(0)).to eq(0)
-    end
-  end 
-
-  describe 'sad path' do
-    it 'returns an error if the quantity parameter is missing or less than one' do
-      get '/api/v1/revenue/merchants'
-
-      expect(response).to_not be_successful
-      expect(response.status).to eq 400
-      
-      get '/api/v1/revenue/merchants?quantity=0'
-      expect(response).to_not be_successful
-      expect(response.status).to eq 400
-
-      get '/api/v1/revenue/merchants?quantity=nonsense'
-      expect(response).to_not be_successful
-      expect(response.status).to eq 400
-    end
-  end
-
-  def set_up
-  
   end
 end
