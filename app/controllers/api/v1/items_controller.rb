@@ -8,8 +8,8 @@ class API::V1::ItemsController < ApplicationController
   end
 
   def show
-    if item = Item.find(params[:id])
-      render json: ItemSerializer.new(item)
+    if Item.find(params[:id])
+      render json: ItemSerializer.new(Item.find(params[:id]))
     else
       render json: item.errors.full_messages, status: not_found
     end

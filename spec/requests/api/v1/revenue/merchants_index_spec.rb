@@ -6,8 +6,7 @@ RSpec.describe "Merchants Revenue Index API /api/v1/revenue/merchants?quantity="
   end 
 
   describe 'Revenue Merchants Happy path' do
-    xit 'sends a list of merchants and revenue' do
-      # ActionController::UnknownFormat: API::V1::Revenue::MerchantsController#index is missing a template for this request format and variant.
+    it 'sends a list of merchants and revenue' do
       get '/api/v1/revenue/merchants?quantity=2'
 
       # require 'pry'; binding.pry
@@ -27,7 +26,7 @@ RSpec.describe "Merchants Revenue Index API /api/v1/revenue/merchants?quantity="
       end
     end
 
-    xit 'sends a list of all merchants if the quantity is too large' do
+    it 'sends a list of all merchants if the quantity is too large' do
       get '/api/v1/revenue/merchants?quantity=100'
 
       expect(response).to be_successful
