@@ -33,13 +33,14 @@ This project is a build of a Rails API to expose the data that powers the site, 
       - delete an item
       - get the merchant data for a given item ID
   * Expose non-RESTful API endpoints for:
-    * find one MERCHANT based on search criteria AND find all ITEMS based on search criteria
+      - Find one MERCHANT based on partial name match
+      - Find all ITEMS based on partial name match
 
 
   * Business Intelligence (ActiveRecord Queries)
-     * find a quantity of merchants sorted by descending revenue
-     * find the revenue for a single merchant by id
-     * find a quantity of items sorted by descending revenue
+      - Find a quantity of merchants sorted by descending revenue
+      - Find the revenue for a single merchant by id
+      - Find a quantity of items sorted by descending revenue
 
   
 
@@ -95,12 +96,11 @@ Open the browser of your choice and navigate to:
    6. Open localhost server in browser ```localhost:3000```
 
 ## To-do list:
-  * Expose FOUR of the following for a total of 15 endpoints:
-    * find a quantity of merchants sorted by descending revenue (Solve error)
+  * Expose ONE of the following for a total of 15 endpoints:
     * find a quantity of merchants sorted by descending item quantity sold
     * total revenue generated in the whole system over a start/end date range
     * revenue report, broken down by month in ascending date order
-  * Record video introduction to project
+  * Complete db migration/seeding in Heroku
   * Write API documentation for users
 
 ## Status
