@@ -19,8 +19,18 @@ RAILS ENGINE -- As a devloper working for a FICTITIOUS company developing an E-C
 This project is a build of a Rails API to expose the data that powers the site, which the front end would then consume.
 
 ### Features:
-  * ???
+  * Business Intelligence (ActiveRecord Queries)
+     * find a quantity of merchants sorted by descending revenue
+     * find a quantity of items sorted by descending revenue
 
+     * find a quantity of merchants sorted by descending item quantity sold
+     * revenue report, broken down by month in ascending date order
+
+
+     * total revenue generated in the whole system over a start/end date range   X
+     * total revenue for a given merchant                                        X
+     
+     * total revenue of successful invoices which have not yet been shipped
   
 
 ## Link

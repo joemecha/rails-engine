@@ -7,17 +7,17 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   # revenue for multiple merchants query params 'quantity'
-  def self.revenue(result_quantity)
+  def self.revenue(search_quantity)
     joins(items: {invoice_items: {invoice: :transactions}})
     .where("invoices.status='shipped' AND transactions.result='success'")
     .group(:id)
     .select('merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
     .order('revenue DESC')
-    .limit(result_quantity)
+    .limit(search_quantity)
   end
 
-  # revenue for one merchant (show action)
-  def revenue
+  # revenue for one merchant (show action) NOT WORKING
+  # def revenue
     # self.find_by_sql "SELECT merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue
     # FROM merchants
     # JOIN  items ON merchants.id = items.id
@@ -32,5 +32,5 @@ class Merchant < ApplicationRecord
     # .where("invoices.status='shipped' AND transactions.result='success'")
     # .group(:id)
     # .select("merchants.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-  end
+  # end
 end

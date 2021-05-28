@@ -32,7 +32,7 @@ RSpec.describe "Merchants Revenue Index API /api/v1/revenue/merchants?quantity="
       merchants = JSON.parse(response.body, symbolize_names: true)
 
       expect(merchants[:data].count).to eq(4)
-      expect(merchants[:data].last[:attributes][:revenue].round(0)).to eq(2)
+      expect(merchants[:data].last[:attributes][:revenue]).to eq(2.0)
     end
   end 
 

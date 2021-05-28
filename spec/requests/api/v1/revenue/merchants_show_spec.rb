@@ -13,8 +13,6 @@ RSpec.describe "Total Revenue for One Merchant API", type: :request do
       expect(response).to be_successful
       expect(merchant[:data].count).to eq(1)
       expect(merchant[:data][:attributes][:revenue]).to eq(@merchant_2.revenue)
-
-      require 'pry'; binding.pry
       
       expect(merchant).to have_key(:id)
       expect(merchant[:id]).to be_an(String)

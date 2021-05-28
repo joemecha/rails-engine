@@ -9,12 +9,12 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   belongs_to :merchant
 
-  def self.revenue(search_quantity)
+  def self.revenue(search_quantity = 10)
     joins(invoice_items: {invoice: :transactions})
     .where("invoices.status='shipped' AND transactions.result='success'")
     .group(:id)
-    .select("items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-    .order(revenue: :desc)
-    .limit("search_quantity")
+    .select('items.*, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+    .order('revenue desc')
+    .limit(search_quantity)
   end
 end
