@@ -19,12 +19,32 @@ RAILS ENGINE -- As a devloper working for a FICTITIOUS company developing an E-C
 This project is a build of a Rails API to expose the data that powers the site, which the front end would then consume.
 
 ### Features:
-  * ???
+  * FULLY test API endpoints for happy/sad paths and edge cases (on-going)
+  * Expose the RESTful API endpoints for:
+    * Merchants:
+      - get all merchants, a maximum of 20 at a time
+      - get one merchant
+      - get all items for a given merchant ID
+    * Items:
+      - get all items, a maximum of 20 at a time
+      - get one item
+      - create an item
+      - edit an item
+      - delete an item
+      - get the merchant data for a given item ID
+  * Expose non-RESTful API endpoints for:
+    * find one MERCHANT based on search criteria AND find all ITEMS based on search criteria
+
+
+  * Business Intelligence (ActiveRecord Queries)
+     * find a quantity of merchants sorted by descending revenue
+     * find the revenue for a single merchant by id
+     * find a quantity of items sorted by descending revenue
 
   
 
 ## Link
-### [https://joe-rails-engine.herokuapp.com/](https://joe-rails-engine.herokuapp.com/)
+### [https://joe-mecha-rails-engine.herokuapp.com/](https://joe-mecha-rails-engine.herokuapp.com/)
 
 ## Database Schema
 ![Diagram](lib/images/database_diagram.png "Database Schema")
@@ -56,40 +76,32 @@ Project is created with:
 To run this program:
 
 Open the browser of your choice and navigate to:
-[https://joe-rails-engine.herokuapp.com/](https://joe-rails-engine.herokuapp.com/)
+[https://joe-mecha-rails-engine.herokuapp.com/](https://joe-mecha-rails-engine.herokuapp.com/)
 
    ## Local Setup
 
    1. Fork and Clone the repo
    2. Install gem packages: `bundle install`
-   3. Setup the database: `rails db:create`
+   3. Add the following to db/seeds.rb
+      ```Ruby
+      cmd = "pg_restore --verbose --clean --no-acl --no-owner -h localhost -U $(whoami) -d rails-engine_development db/data/rails-engine-development.pgdump"
+      puts "Loading PostgreSQL Data dump into local database with command:"
+      puts cmd
+      system(cmd)
+      ```
+   3. Download [rails-engine-development.pgdump](https://raw.githubusercontent.com/turingschool/backend-curriculum-site/gh-pages/module3/projects/rails_engine/rails-engine-development.pgdump) and create a folder in db:  /db/data     Move the file into this folder.
+   4. Run ```rails db:{drop,create,migrate,seed}```
+   5. Start local server ```rails s```
+   6. Open localhost server in browser ```localhost:3000```
 
 ## To-do list:
-* FULLY test API endpoints for happy/sad paths and edge cases (on-going)
-* Expose the RESTful API endpoints for:
-  * Merchants:
-    - get all merchants, a maximum of 20 at a time
-    - get one merchant
-    - get all items for a given merchant ID
-  * Items:
-    - get all items, a maximum of 20 at a time
-    - get one item
-    - create an item
-    - edit an item
-    - delete an item
-    - get the merchant data for a given item ID
-* Expose non-RESTful API endpoints for:
-  * ONE of following endpoint pairs:
-    * find one MERCHANT based on search criteria AND find all ITEMS based on search criteria
-    * find one ITEM based on search criteria AND find all MERCHANTS based on search criteria
-* Expose FOUR of the following for a total of 15 endpoints:
-  * find a quantity of merchants sorted by descending revenue
-  * find a quantity of merchants sorted by descending item quantity sold
-  * total revenue generated in the whole system over a start/end date range
-  * total revenue for a given merchant
-  * find a quantity of items sorted by descending revenue
-  * total revenue of successful invoices which have not yet been shipped
-  * revenue report, broken down by month in ascending date order
+  * Expose FOUR of the following for a total of 15 endpoints:
+    * find a quantity of merchants sorted by descending revenue (Solve error)
+    * find a quantity of merchants sorted by descending item quantity sold
+    * total revenue generated in the whole system over a start/end date range
+    * revenue report, broken down by month in ascending date order
+  * Record video introduction to project
+  * Write API documentation for users
 
 ## Status
 Project is: _in progress_
@@ -99,5 +111,3 @@ Created by
 Joe Mecha [GitHub](https://github.com/joemecha) • [LinkedIn](https://www.linkedin.com/in/joemecha/)
 
 ~ feel free to contact me ~
-
-![Screenshot](lib/images/screenshot.jpeg)

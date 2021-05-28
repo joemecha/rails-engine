@@ -10,8 +10,11 @@ Rails.application.routes.draw do
         resources :find_all, controller: :search, only: :index
       end
 
+      namespace :revenue do
+        resources :merchants, only: %i[index show]
+        resources :items, only: %i[index show]
+      end
       resources :merchants, only: %i[index show] do
-        # resources :find, controller: :search, only: :index 
         resources :items, controller: :merchant_items, only: :index
       end
 
