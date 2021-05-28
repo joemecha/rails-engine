@@ -22,14 +22,13 @@ FactoryBot.define do
 
   factory :transaction do
     credit_card_number { Faker::Finance.credit_card }
-    result { [0, 1].sample }
+    result { "success" }
     invoice
   end
 
   factory :invoice_item do
     quantity { Faker::Number.non_zero_digit }
     unit_price { Faker::Commerce.price }
-    status { [0, 1, 2].sample }
     invoice
     item
   end
