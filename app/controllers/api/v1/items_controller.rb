@@ -2,7 +2,7 @@ class API::V1::ItemsController < ApplicationController
   def index
     page = [params.fetch(:page, 1).to_i, 1].max
     per_page = params.fetch(:per_page, 20).to_i
-  
+
     items = Item.limit(per_page).offset((page - 1) * per_page)
     render json: ItemSerializer.new(items)
   end
@@ -10,18 +10,18 @@ class API::V1::ItemsController < ApplicationController
   def show
     if item = Item.find(params[:id])
       render json: ItemSerializer.new(item)
-    else 
+    else
       render json: item.errors.full_messages, status: not_found
-    end 
+    end
   end
 
   def create
     item = Item.new(item_params)
     if item.save
-      render json: ItemSerializer.new(item), status: 201
+      render json: ItemSerializer.new(item), status: :created
     else
-      render :json => { :errors => item.errors.full_messages }, :status => 404
-    end 
+      render json: { errors: item.errors.full_messages }, status: :not_found
+    end
   end
 
   def update
@@ -30,7 +30,7 @@ class API::V1::ItemsController < ApplicationController
       render json: ItemSerializer.new(item)
     else
       render json: item.errors.full_messages, status: unprocessable_entity
-    end 
+    end
   end
 
   def destroy
