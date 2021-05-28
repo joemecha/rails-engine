@@ -35,21 +35,22 @@ RSpec.describe "/api/v1/revenue/merchants", type: :request do
       expect(merchants[:data].count).to eq(5)
       expect(merchants[:data][:revenue].last.round(0)).to eq(0)
     end
+  end 
 
   describe 'sad path' do
     it 'returns an error if the quantity parameter is missing or less than one' do
       get '/api/v1/revenue/merchants'
 
       
-      expect(response).to not.be_successful
+      expect(response).to_not be_successful
       expect(response.status).to eq 400
       
       get '/api/v1/revenue/merchants?quantity=0'
-      expect(response).to not.be_successful
+      expect(response).to_not be_successful
       expect(response.status).to eq 400
 
       get '/api/v1/revenue/merchants?quantity=nonsense'
-      expect(response).to not.be_successful
+      expect(response).to_not be_successful
       expect(response.status).to eq 400
     end
   end
@@ -67,23 +68,6 @@ RSpec.describe "/api/v1/revenue/merchants", type: :request do
       merchant = API::V1::Revenue::Merchant.create! valid_attributes
       get api_v1_revenue_merchant_url(api_v1_revenue_merchant), as: :json
       expect(response).to be_successful
-    end
-  end
-
-    context "with invalid parameters" do
-      xit "does not create a new API::V1::Revenue::Merchant" do
-        expect {
-          post api_v1_revenue_merchants_url,
-               params: { api/v1/revenue_merchant: invalid_attributes }, as: :json
-        }.to change(API::V1::Revenue::Merchant, :count).by(0)
-      end
-
-      xit "renders a JSON response with errors for the new api/v1/revenue_merchant" do
-        post api_v1_revenue_merchants_url,
-             params: { api/v1/revenue_merchant: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
     end
   end
 
