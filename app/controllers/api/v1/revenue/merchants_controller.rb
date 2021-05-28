@@ -3,6 +3,7 @@ class API::V1::Revenue::MerchantsController < ApplicationController
     # returns a quantity of merchants sorted by descending revenue
     if params[:quantity] && params[:quantity].to_i.positive?
       merchants = Merchant.revenue(params[:quantity])
+      render json: MerchantNameRevenueSerializer.new(merchants)
     else
       render json: { error: 'Bad Request' }, status: :bad_request
     end
