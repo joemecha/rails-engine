@@ -12,7 +12,7 @@ class API::V1::MerchantsController < API::APIController
     if params[:id]
       render json: MerchantSerializer.new(@merchant)
     else
-      render :json => { :errors => @merchant.errors.full_messages }, :status => 404
-    end 
+      render json: { errors: @merchant.errors.full_messages }, status: :not_found
+    end
   end
 end
